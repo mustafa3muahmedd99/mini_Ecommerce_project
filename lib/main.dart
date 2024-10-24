@@ -2,8 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_mini_e_commerce_project/core/pages.dart';
-import 'package:flutter_mini_e_commerce_project/pages/home_page.dart';
-import 'package:flutter_mini_e_commerce_project/pages/product1_page.dart';
 void main() {
   runApp(const MyApp());
 }
