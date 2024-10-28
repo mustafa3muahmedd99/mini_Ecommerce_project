@@ -147,10 +147,13 @@ class HomePage extends StatelessWidget {
 Widget _buildCategoryItem(IconData icon, String label, Color color) {
   return Column(
     children: [
-      CircleAvatar(
-        radius: 30,
-        backgroundColor: color,
-        child: Icon(icon, color: Colors.black),
+      InkWell(
+        onTap: () {},
+        child: CircleAvatar(
+          radius: 30,
+          backgroundColor: color,
+          child: Icon(icon, color: Colors.black),
+        ),
       ),
       SizedBox(height: 8),
       Text(label, style: TextStyle(color: Colors.black)),
