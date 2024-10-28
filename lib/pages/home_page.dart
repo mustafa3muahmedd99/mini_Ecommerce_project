@@ -1,44 +1,39 @@
-// ignore_for_file: non_constant_identifier_names
+// ignore_for_file: non_constant_identifier_names, prefer_const_literals_to_create_immutables, camel_case_types
 
 import 'package:flutter/material.dart';
-import 'package:flutter_mini_e_commerce_project/core/route_name.dart';
+import 'package:mini_e_commerce/core/route_name.dart';
+import 'package:mini_e_commerce/core/widgets/build_product_item.dart';
 
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0.0,
-        title: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: TextField(
-            decoration: InputDecoration(
-              hintText: 'search',
-              filled: true,
-              fillColor: Color(0xFFF3F4F6), // اللون الرمادي الخفيف
-              prefixIcon:
-                  Icon(Icons.search, color: Colors.black), // أيقونة البحث
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8.0),
-                borderSide: BorderSide.none,
-              ),
-            ),
-          ),
-        ),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.menu, color: Colors.black), // الأيقونة على اليمين
-            onPressed: () {},
-          ),
-        ],
-      ),
-      body: Padding(
+      appBar: _appbar(),
+      body: _body(context),
+      bottomNavigationBar: _bottomnavigationbar(),
+    );
+  }
+
+  BottomNavigationBar _bottomnavigationbar() {
+    return BottomNavigationBar(
+      currentIndex: 0,
+      selectedItemColor: Colors.blue,
+      unselectedItemColor: Colors.grey,
+      items: [
+        BottomNavigationBarItem(icon: Icon(Icons.home), label: ''),
+        BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: ''),
+        BottomNavigationBarItem(icon: Icon(Icons.person), label: ''),
+      ],
+    );
+  }
+
+  SingleChildScrollView _body(BuildContext context) {
+    return SingleChildScrollView(
+      child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Categories Section
             Text(
               "Categories",
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
@@ -56,45 +51,23 @@ class HomePage extends StatelessWidget {
               ],
             ),
             SizedBox(height: 24),
-            // Best Selling Section
             Text(
               "Best Selling",
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
             ),
             SizedBox(height: 16),
-            Expanded(
-              child: GridView.count(
-                crossAxisCount: 2,
-                childAspectRatio: 0.8,
-                children: [
-                  InkWell(
-                    onTap: () =>
-                        Navigator.pushNamed(context, RouteName.Product1_Page),
-                    child: _buildProductItem(
-                      productName: 'Product 1',
-                      price: '340\$',
-                      image: Image.asset(
-                        'assets/images/basketball.jpeg',
-                        fit: BoxFit.contain,
-                      ),
-                      description: 'description...',
-                    ),
-                  ),
-                  InkWell(
-                    onTap: () =>
-                        Navigator.pushNamed(context, RouteName.Product2_page),
-                    child: _buildProductItem(
-                      productName: 'Product 2',
-                      price: '340\$',
-                      image: Image.asset(
-                        'assets/images/product_page.jpg',
-                        fit: BoxFit.contain,
-                      ),
-                      description: 'description...',
-                    ),
-                  ),
-                  _buildProductItem(
-                    productName: 'Product 3',
+            GridView.count(
+              crossAxisCount: 2,
+              childAspectRatio: 0.8,
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              children: [
+                InkWell(
+                  onTap: () {
+                    Navigator.pushNamed(context, RouteName.Product1_Page);
+                  },
+                  child: BuildProductItem(
+                    productName: 'Product 1',
                     price: '340\$',
                     image: Image.asset(
                       'assets/images/basketball.jpeg',
@@ -102,8 +75,12 @@ class HomePage extends StatelessWidget {
                     ),
                     description: 'description...',
                   ),
-                  _buildProductItem(
-                    productName: 'Product 4',
+                ),
+                InkWell(
+                  onTap: () =>
+                      Navigator.pushNamed(context, RouteName.Product2_page),
+                  child: BuildProductItem(
+                    productName: 'Product 2',
                     price: '340\$',
                     image: Image.asset(
                       'assets/images/product_page.jpg',
@@ -111,22 +88,58 @@ class HomePage extends StatelessWidget {
                     ),
                     description: 'description...',
                   ),
-                ],
-              ),
+                ),
+                BuildProductItem(
+                  productName: 'Product 3',
+                  price: '340\$',
+                  image: Image.asset(
+                    'assets/images/basketball.jpeg',
+                    fit: BoxFit.contain,
+                  ),
+                  description: 'description...',
+                ),
+                BuildProductItem(
+                  productName: 'Product 4',
+                  price: '340\$',
+                  image: Image.asset(
+                    'assets/images/product_page.jpg',
+                    fit: BoxFit.contain,
+                  ),
+                  description: 'description...',
+                ),
+              ],
             ),
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 0,
-        selectedItemColor: Colors.blue,
-        unselectedItemColor: Colors.grey,
-        items: [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: ''),
-          BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: ''),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: ''),
-        ],
+    );
+  }
+
+  AppBar _appbar() {
+    return AppBar(
+      backgroundColor: Colors.white,
+      elevation: 0,
+      title: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: TextField(
+          decoration: InputDecoration(
+            hintText: 'search',
+            filled: true,
+            fillColor: Color(0xFFF3F4F6),
+            prefixIcon: Icon(Icons.search, color: Colors.black),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8.0),
+              borderSide: BorderSide.none,
+            ),
+          ),
+        ),
       ),
+      actions: [
+        IconButton(
+          icon: Icon(Icons.menu, color: Colors.black),
+          onPressed: () {},
+        ),
+      ],
     );
   }
 }
@@ -143,52 +156,4 @@ Widget _buildCategoryItem(IconData icon, String label, Color color) {
       Text(label, style: TextStyle(color: Colors.black)),
     ],
   );
-}
-
-class _buildProductItem extends StatelessWidget {
-  final String productName;
-  final String description;
-  final String price;
-  final Image image;
-
-  const _buildProductItem(
-      {required this.productName,
-      required this.price,
-      required this.image,
-      required this.description});
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      margin: EdgeInsets.all(10),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            child: image,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(productName,
-                    style: TextStyle(fontWeight: FontWeight.bold)),
-                SizedBox(height: 8),
-                Text(description),
-                SizedBox(
-                  height: 8,
-                ),
-                Text(
-                  price,
-                  style: TextStyle(color: Colors.orange),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 }

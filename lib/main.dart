@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:flutter_mini_e_commerce_project/core/pages.dart';
+import 'package:mini_e_commerce/core/pages.dart';
 void main() {
   runApp(const MyApp());
 }
